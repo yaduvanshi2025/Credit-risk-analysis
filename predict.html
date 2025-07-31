@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Credit Risk Prediction</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background: url('https://media.istockphoto.com/id/1488294044/photo/businessman-works-on-laptop-showing-business-analytics-dashboard-with-charts-metrics-and-kpi.jpg?s=2048x2048&w=is&k=20&c=mw1ywS-cmujLOXQ-cp364oGx3fTguinNMEAONPyI66c=') no-repeat center center/cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+  }
+
+  .custom-container {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    color: #fff;
+  }
+
+  .custom-container label {
+    color: #fff;
+  }
+
+  .custom-container input {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+  }
+
+  .custom-container input::placeholder {
+    color: #eee;
+  }
+
+  .custom-container button {
+    background: linear-gradient(135deg, #00c3ff, #007bff);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+  }
+
+  .custom-container button:hover {
+    background: linear-gradient(135deg, #007bff, #00c3ff);
+  }
+
+  .custom-container h2 {
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 2px;
+  }
+</style>
+
+    
+  
+</head>
+<body>
+  <div class="custom-container">
+    <h2>Credit Risk Prediction</h2>
+    <form method="post" action="/predict">
+      <div class="mb-3">
+        <label class="form-label">Age:</label>
+        <input type="text" name="age" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Education Level:</label>
+        <input type="text" name="ed" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Years Employed:</label>
+        <input type="text" name="employ" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Years at Address:</label>
+        <input type="text" name="address" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Income:</label>
+        <input type="text" name="income" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Debt-to-Income:</label>
+        <input type="text" name="debtinc" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Credit Debt:</label>
+        <input type="text" name="creddebt" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Other Debt:</label>
+        <input type="text" name="othdebt" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Predict</button>
+    </form>
+
+    {% if prediction %}
+    <div class="alert alert-info text-center mt-4">
+      <strong>Prediction:</strong> {{ prediction }}<br>
+      <strong>Confidence:</strong> {{ confidence }}%<br>
+      <strong>Risk Category:</strong> {{ risk_category }}
+    </div>
+
+    <div class="model-details">
+      <h6>🔍 <strong>Model Details:</strong></h6>
+      <p><strong>Intercept:</strong> {{ intercept }}</p>
+      <p><strong>Coefficients:</strong></p>
+      <ul>
+        <li>Age: {{ coefficients[0] }}</li>
+        <li>Education Level: {{ coefficients[1] }}</li>
+        <li>Years Employed: {{ coefficients[2] }}</li>
+        <li>Years at Address: {{ coefficients[3] }}</li>
+        <li>Income: {{ coefficients[4] }}</li>
+        <li>Debt-to-Income: {{ coefficients[5] }}</li>
+        <li>Credit Debt: {{ coefficients[6] }}</li>
+        <li>Other Debt: {{ coefficients[7] }}</li>
+      </ul>
+    </div>
+    {% endif %}
+
+    <a href="/logout" class="logout-link btn btn-outline-danger w-100 mt-3">Logout</a>
+  </div>
+</body>
+</html>
